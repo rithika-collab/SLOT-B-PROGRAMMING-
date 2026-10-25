@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define SLAB1_UNITS 100
+#define SLAB2_UNITS 200
+#define RATE2_PAISE 225LL
+#define RATE3_PAISE 450LL
+#define FIXED_CHARGE_PAISE 5000LL
+
+long long compute_bill_paise(long long units)
+{
+    long long total = FIXED_CHARGE_PAISE;
+
+    if (units > SLAB1_UNITS && units <= SLAB2_UNITS)
+        total += (units - SLAB1_UNITS) * RATE2_PAISE;
+    else if (units > SLAB2_UNITS)
+    {
+        total += (SLAB2_UNITS - SLAB1_UNITS) * RATE2_PAISE;
+        total += (units - SLAB2_UNITS) * RATE3_PAISE;
+    }
+
+    return total;
+}
+
+int main(void)
+{
+    long long units[] = {0, 100, 150, 200, 350};
+    int n = sizeof(units) / sizeof(units[0]);
+
+    printf("Size of int: %zu bytes\n", sizeof(int));
+    printf("Size of long long: %zu bytes\n", sizeof(long long));
+
+    printf("\nBilling Test Results:\n");
+
+    for (int i = 0; i < n; i++)
+    {
+        long long total = compute_bill_paise(units[i]);
+
+        printf("%lld units -> Rs %lld.%02lld\n",
+               units[i], total / 100, total % 100);
+    }
+
+    printf("\nINT_MAX = %d\n", INT_MAX);
+    printf("LLONG_MAX = %lld\n", LLONG_MAX);
+
+    printf("\nFinal Design Recommendations:\n");
+    printf("1. Use long long for large readings and totals.\n");
+    printf("2. Store money as integer paise.\n");
+    printf("3. Use named constants for tariff values.\n");
+    printf("4. Validate all input readings.\n");
+    printf("5. Use configuration files for tariff changes.\n");
+
+    return 0;
+} 
+
+OUTPUT:
+
+Size of int: 4 bytes
+Size of long long: 8 bytes
+
+Billing Test Results:
+0 units -> Rs 50.00
+100 units -> Rs 50.00
+150 units -> Rs 162.50
+200 units -> Rs 275.00
+350 units -> Rs 950.00
+
+INT_MAX = 2147483647
+LLONG_MAX = 9223372036854775807
+
+Final Design Recommendations:
+1. Use long long for large readings and totals.
+2. Store money as integer paise.
+3. Use named constants for tariff values.
+4. Validate all input readings.
+5. Use configuration files for tariff changes.
