@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+#define SQUARE(x) ((x) * (x))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define RUPEES_TO_PAISE(x) ((x) * 100)
+
+int main(void)
+{
+    int a = 5, b = 10;
+    int i = 3, j = 7;
+
+    printf("Square of a = %d\n", SQUARE(a));
+    printf("Square of a+1 = %d\n", SQUARE(a + 1));
+    printf("Maximum = %d\n", MAX(a, b));
+    printf("Maximum value = %d\n", MAX(i++, j));
+    printf("Rupees to paise = %d\n", RUPEES_TO_PAISE(50));
+
+    return 0;
+}
+
+OUTPUT:
+
+Square of a = 25
+Square of a+1 = 36
+Maximum = 10
+Maximum value = 7
+Rupees to paise = 5000
