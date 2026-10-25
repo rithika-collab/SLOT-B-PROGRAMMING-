@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+#define SLAB1_UNITS 100
+#define SLAB2_UNITS 200
+#define RATE2_PAISE 225
+#define RATE3_PAISE 450
+#define FIXED_CHARGE_PAISE 5000LL
+
+long long compute_bill_paise(long long units)
+{
+    long long paise = FIXED_CHARGE_PAISE;
+
+    if (units <= SLAB1_UNITS)
+        return paise;
+
+    if (units <= SLAB2_UNITS)
+        paise += (units - SLAB1_UNITS) * RATE2_PAISE;
+    else
+    {
+        paise += (SLAB2_UNITS - SLAB1_UNITS) * RATE2_PAISE;
+        paise += (units - SLAB2_UNITS) * RATE3_PAISE;
+    }
+
+    return paise;
+}
+
+int main(void)
+{
+    long long previous, current, units, total;
+    int test_units[] = {0, 100, 150, 200, 350};
+    int n = sizeof(test_units) / sizeof(test_units[0]);
+
+    printf("Enter previous meter reading: ");
+    if (scanf("%lld", &previous) != 1 || previous < 0)
+    {
+        printf("Invalid previous reading\n");
+        return 1;
+    }
+
+    printf("Enter current meter reading: ");
+    if (scanf("%lld", &current) != 1 || current < previous)
+    {
+        printf("Invalid current reading\n");
+        return 1;
+    }
+
+    units = current - previous;
+    total = compute_bill_paise(units);
+
+    printf("\nUnits consumed: %lld\n", units);
+    printf("Total bill: Rs %lld.%02lld\n",
+           total / 100, total % 100);
+
+    printf("\nTest Results:\n");
+
+    for (int i = 0; i < n; i++)
+    {
+        total = compute_bill_paise(test_units[i]);
+
+        printf("%d units -> Rs %lld.%02lld\n",
+               test_units[i], total / 100, total % 100);
+    }
+
+    return 0;
+}
+
+OUTPUT:
+
+Enter previous meter reading: 1000
+Enter current meter reading: 1250
+
+Units consumed: 250
+Total bill: Rs 500.00
+
+Test Results:
+0 units -> Rs 50.00
+100 units -> Rs 50.00
+150 units -> Rs 162.50
+200 units -> Rs 275.00
+350 units -> Rs 950.00
