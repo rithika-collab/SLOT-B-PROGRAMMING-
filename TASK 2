@@ -1,0 +1,56 @@
+[11:39 pm, 25/10/2026] Anjanai: #include <stdio.h>
+
+int main(void)
+{
+    long long previous, current, units;
+    long long energyCharge, fixedCharge = 5000;
+    long long total;
+    char householdNumber[30];
+    int category;
+
+    const int RATE1_PAISE = 225;
+    const int RATE2_PAISE = 450;
+    const int SLAB1_UNITS = 100;
+    const int SLAB2_UNITS = 200;
+
+    printf("Enter household number: ");
+    scanf("%29s", householdNumber);
+
+    printf("Enter category (1-Domestic, 2-Commercial): ");
+    scanf("%d", &category);
+
+    printf("Enter previous meter reading: ");
+    if (scanf("%lld", &previous) != 1 || previous < 0)
+    {
+        printf("Invalid previous reading\n");
+        return 1;
+    }
+
+    printf("Enter current meter reading: ");
+    if (scanf("%lld", &current) != 1 || current < pr…
+[11:41 pm, 25/10/2026] Anjanai: #include <stdio.h>
+#include <limits.h>
+
+typedef unsigned short meter_t;
+
+unsigned int consumption(meter_t previous, meter_t current)
+{
+    return (unsigned int)(meter_t)(current - previous);
+}
+
+int main(void)
+{
+    printf("sizeof(meter_t) = %zu bytes, maximum reading = %u\n",
+           sizeof(meter_t), (unsigned int)USHRT_MAX);
+
+    printf("Consumption: %u units\n", consumption(1200, 1530));
+    printf("Consumption: %u units\n", consumption(65400, 1200));
+
+    return 0;
+}
+
+OUTPUT:
+
+sizeof(meter_t) = 2 bytes, maximum reading = 65535
+Consumption: 330 units
+Consumption: 1336 units
