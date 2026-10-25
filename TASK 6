@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+int main(void)
+{
+    long long previous, current, units;
+    long long energyCharge, fixedCharge = 5000;
+    long long total;
+
+    printf("Enter previous meter reading: ");
+    if (scanf("%lld", &previous) != 1 || previous < 0)
+    {
+        printf("Invalid previous reading\n");
+        return 1;
+    }
+
+    printf("Enter current meter reading: ");
+    if (scanf("%lld", &current) != 1 || current < previous)
+    {
+        printf("Invalid current reading\n");
+        return 1;
+    }
+
+    units = current - previous;
+
+    if (units <= 100)
+        energyCharge = 0;
+    else if (units <= 200)
+        energyCharge = (units - 100) * 225;
+    else
+        energyCharge = 100 * 225 + (units - 200) * 450;
+
+    total = energyCharge + fixedCharge;
+
+    printf("Units consumed: %lld\n", units);
+    printf("Energy charge: Rs %lld.%02lld\n",
+           energyCharge / 100, energyCharge % 100);
+    printf("Fixed charge: Rs %lld.%02lld\n",
+           fixedCharge / 100, fixedCharge % 100);
+    printf("Total bill: Rs %lld.%02lld\n",
+           total / 100, total % 100);
+
+    return 0;
+} 
+
+OUTPUT:
+
+Enter previous meter reading: 1000
+Enter current meter reading: 1000
+Units consumed: 0
+Energy charge: Rs 0.00
+Fixed charge: Rs 50.00
+Total bill: Rs 50.00
