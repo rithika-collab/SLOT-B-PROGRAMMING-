@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <limits.h>
+#include <math.h>
+
+int main(void)
+{
+    int units = 150;
+    int a = 5, b = 2;
+    long long largeValue = 5000000000LL;
+    long long totalPaise = 16250;
+    double charge = 12.75;
+
+    printf("1. Integer division: %d / %d = %d\n",
+           a, b, a / b);
+
+    printf("2. Floating-point division: %d / %d = %.2f\n",
+           a, b, (double)a / b);
+
+    printf("3. Explicit casting large value to int: %d\n",
+           (int)largeValue);
+
+    printf("4. Units divided by 100: %d\n", units / 100);
+
+    printf("5. Rounded charge: Rs %.2f\n", round(charge));
+
+    printf("6. Bill amount: Rs %lld.%02lld\n",
+           totalPaise / 100, totalPaise % 100);
+
+    printf("7. Implicit conversion: %.2f\n", a + 2.5);
+
+    return 0;
+} 
+
+OUTPUT:
+
+Enter previous meter reading: 1000
+Enter current meter reading: 1250
+Units consumed: 250
+Energy charge: Rs 450.00
+Fixed charge: Rs 50.00
+Total bill: Rs 500.00
