@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define PEAK_START 18
+#define PEAK_END 22
+
+typedef long long energy_t;
+
+int main(void)
+{
+    energy_t normalWh, peakWh, totalWh;
+    long long normalRate, peakRate;
+    long long normalCharge, peakCharge, totalPaise;
+    int surcharge = 20;
+
+    printf("Enter normal-hour energy in Wh: ");
+    if (scanf("%lld", &normalWh) != 1 || normalWh < 0)
+    {
+        printf("Invalid input\n");
+        return 1;
+    }
+
+    printf("Enter peak-hour energy in Wh: ");
+    if (scanf("%lld", &peakWh) != 1 || peakWh < 0)
+    {
+        printf("Invalid input\n");
+        return 1;
+    }
+
+    printf("Enter normal rate in paise per kWh: ");
+    if (scanf("%lld", &normalRate) != 1 || normalRate < 0)
+    {
+        printf("Invalid rate\n");
+        return 1;
+    }
+
+    printf("Enter peak rate in paise per kWh: ");
+    if (scanf("%lld", &peakRate) != 1 || peakRate < 0)
+    {
+        printf("Invalid rate\n");
+        return 1;
+    }
+
+    normalCharge = normalWh * normalRate / 1000;
+    peakCharge = peakWh * peakRate * (100 + surcharge) / 100 / 1000;
+
+    totalPaise = normalCharge + peakCharge;
+    totalWh = normalWh + peakWh;
+
+    printf("\nTotal energy: %lld Wh\n", totalWh);
+    printf("Normal charge: %lld paise\n", normalCharge);
+    printf("Peak charge: %lld paise\n", peakCharge);
+    printf("Total bill: Rs %lld.%02lld\n",
+           totalPaise / 100, totalPaise % 100);
+
+    return 0;
+} 
+
+OUTPUT:
+
+Enter normal-hour energy in Wh: 1000
+Enter peak-hour energy in Wh: 1000
+Enter normal rate in paise per kWh: 225
+Enter peak rate in paise per kWh: 450
+
+Total energy: 2000 Wh
+Normal charge: 225 paise
+Peak charge: 540 paise
+Total bill: Rs 7.65
