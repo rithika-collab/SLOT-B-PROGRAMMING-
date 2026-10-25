@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+int main(void)
+{
+    long long previous, current, units;
+    long long energyCharge, fixedCharge = 5000;
+    long long total;
+    char householdNumber[30];
+    int category;
+
+    const int RATE1_PAISE = 225;
+    const int RATE2_PAISE = 450;
+    const int SLAB1_UNITS = 100;
+    const int SLAB2_UNITS = 200;
+
+    printf("Enter household number: ");
+    scanf("%29s", householdNumber);
+
+    printf("Enter category (1-Domestic, 2-Commercial): ");
+    scanf("%d", &category);
+
+    printf("Enter previous meter reading: ");
+    if (scanf("%lld", &previous) != 1 || previous < 0)
+    {
+        printf("Invalid previous reading\n");
+        return 1;
+    }
+
+    printf("Enter current meter reading: ");
+    if (scanf("%lld", &current) != 1 || current < previous)
+    {
+        printf("Invalid current reading\n");
+        return 1;
+    }
+
+    if (category != 1 && category != 2)
+    {
+        printf("Invalid category\n");
+        return 1;
+    }
+
+    units = current - previous;
+
+    if (units <= SLAB1_UNITS)
+        energyCharge = 0;
+    else if (units <= SLAB2_UNITS)
+        energyCharge = (units - SLAB1_UNITS) * RATE1_PAISE;
+    else
+        energyCharge = (SLAB2_UNITS - SLAB1_UNITS) * RATE1_PAISE
+                     + (units - SLAB2_UNITS) * RATE2_PAISE;
+
+    if (category == 2)
+        energyCharge = energyCharge * 2;
+
+    total = energyCharge + fixedCharge;
+
+    printf("\nHousehold Number: %s\n", householdNumber);
+    printf("Units Consumed: %lld\n", units);
+    printf("Energy Charge: Rs %lld.%02lld\n",
+           energyCharge / 100, energyCharge % 100);
+    printf("Fixed Charge: Rs %lld.%02lld\n",
+           fixedCharge / 100, fixedCharge % 100);
+    printf("Total Bill: Rs %lld.%02lld\n",
+           total / 100, total % 100);
+
+    return 0;
+}
+
+OUTPUT:
+
+Enter household number: H101
+Enter category (1-Domestic, 2-Commercial): 1
+Enter previous meter reading: 1000
+Enter current meter reading: 1150
+
+Household Number: H101
+Units Consumed: 150
+Energy Charge: Rs 112.50
+Fixed Charge: Rs 50.00
+Total Bill: Rs 162.50
