@@ -1,6 +1,6 @@
-Student Name:
+Student Name: Rithika Sree.V
 
-Register Number:
+Register Number:1912260512
 
 Compiler: GCC
 
